@@ -144,17 +144,18 @@ else:
 		for HEADER in HEADERS:
 			LHEADER=HEADER.split(": ",1)
 			if FieldToShow(LHEADER[0]):
-				DECSUBJECTS=email.header.decode_header(LHEADER[1])
-				SUBJECT=""
-				for DECSUBJECT in DECSUBJECTS:
-					PARTIALSUBJECT,ENCODING=DECSUBJECT
+				FIELDNAME=LHEADER[0]
+				DECFIELDS=email.header.decode_header(LHEADER[1])
+				FIELD=""
+				for DECFIELD in DECFIELDS:
+					PARTIALFIELD,ENCODING=DECFIELD
 					if ENCODING == None:
-						SUBJECT="%s %s" % (SUBJECT,PARTIALSUBJECT)
+						FIELD="%s: %s %s" % (FIELDNAME, FIELD,PARTIALFIELD)
 					else:
-						SUBJECT='%s %s' % (SUBJECT, PARTIALSUBJECT.decode(ENCODING,"replace"))
+						FIELD='%s: %s %s' % (FIELDNAME, FIELD, PARTIALFIELD.decode(ENCODING,"replace"))
 				try:
-					print 'Message %s:%s' % (ID, SUBJECT.encode("utf8","replace"))
+					print 'Message %s:%s' % (ID, FIELD.encode("utf8","replace"))
 				except UnicodeDecodeError:
-					print 'Message %s:%s' % (ID, SUBJECT.decode('iso-8859-1').encode('utf8','replace'))
+					print 'Message %s:%s' % (ID, FIELD.decode('iso-8859-1').encode('utf8','replace'))
 	IMAP.close()
 IMAP.logout()

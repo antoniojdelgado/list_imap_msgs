@@ -67,9 +67,6 @@ def ProcessArguments():
 				else:
 					print "The password file '%s' doesn't exists" % larg[1]
 					sys.exit(65)
-	if IMAPPASSWORD == "":
-		IMAPPASSWORD=getpass.getpass("Password for '%s@%s:%s': " % (IMAPUSER,IMAPSERVER,IMAPPORT))
-	#Message("Password will be '%s'" % IMAPPASSWORD)
 	if IMAPSERVER == "":
 		print "You must indicate a server to connecto to"
 		Usage()
@@ -82,6 +79,8 @@ def ProcessArguments():
 		print "You must indicate a mailbox in the server"
 		Usage()
 		sys.exit(65)
+	if IMAPPASSWORD == "":
+		IMAPPASSWORD=getpass.getpass("Password for '%s@%s:%s': " % (IMAPUSER,IMAPSERVER,IMAPPORT))
 def Usage():
 	print "%s [-h] [-d] [--field=FieldName1] [--field=FieldName2] [--field=FieldName3] [--field=FieldNameN] [--imap-server=IMAPSERVER --imap-port=IMAPPORT --imap-user=IMAPUSER --imap-password=IMAPPASSWORD --imap-password-file=IMAPPASSWORDFILE --imap-mailbox=IMAPMAILBOX] [--ssl|-s]" % sys.argv[0]
 ProcessArguments()
